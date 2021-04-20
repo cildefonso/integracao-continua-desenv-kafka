@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    #2348ef899c474cf1a66d394ee0ad576e
+    #Instalacao de plugin
+    #https://get.jenkins.io/plugins/junit/1.36/junit.hpi
+    container_name: jenkins
+    privileged: true
+    user: jenkins
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "50000:50000"
+    volumes:
+      - ./jenkins/data/jenkins:/var/jenkins_home
+      - ./jenkins/var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins/usr/local/bin/docker:/usr/local/bin/docker
+    environment:
+      JENKINS_HOST_HOME: "/data/jenkins"

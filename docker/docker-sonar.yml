@@ -1,0 +1,59 @@
+version: "2"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 443:443
+    volumes:
+      - ./opt/nginx/yourhost.xyz.key:/etc/nginx/yourhost.xyz.key:ro
+      - ./opt/nginx/yourhost.xyz.crt:/etc/nginx/yourhost.xyz.crt:ro
+      - ./opt/nginx/sonarqube.conf:/etc/nginx/conf.d/sonarqube.conf:z
+    networks:
+      - sonarnet
+    restart: always
+
+  sonarqube:
+    #image: sonarqube:8.2-community
+    image: sonarqube:6.3.1
+    container_name: sonarqube
+    depends_on:
+      - db
+    ports:
+      - "9000:9000"
+    networks:
+      - sonarnet
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - ./sonar/sonarqube_data:/opt/sonarqube/data
+      - ./sonar/sonarqube_extensions:/opt/sonarqube/extensions
+      - ./sonar/sonarqube_logs:/opt/sonarqube/logs
+      - ./sonar/sonarqube_temp:/opt/sonarqube/temp
+  db:
+    image: postgres
+    container_name: postgressonar
+    networks:
+      - sonarnet
+    environment:
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+      - ./postgresql:/var/lib/postgresql
+      # This needs explicit mapping due to https://github.com/docker-library/postgres/blob/4e48e3228a30763913ece952c611e5e9b95c8759/Dockerfile.template#L52
+      - ./postgresql_data:/var/lib/postgresql/data
+
+networks:
+  sonarnet:
+    driver: bridge
+
+volumes:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_temp:
+  postgresql:
+  postgresql_data:
