@@ -4,8 +4,6 @@ services:
     image: jenkins/jenkins:lts
     #command: --httpPort=80 --httpPort=443 --httpsKeyStore=/var/jenkins_ssl/jenkins
     #build: .
-    privileged: true
-    user: ildefonso
     #2348ef899c474cf1a66d394ee0ad576e
     #Instalacao de plugin
     #https://get.jenkins.io/plugins/junit/1.36/junit.hpi

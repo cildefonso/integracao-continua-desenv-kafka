@@ -3,7 +3,7 @@ version: '3'
 services:
   postgres:
     image: postgres
-    container_name: postgres
+    container_name: postgresapp
     ports:
      - 5432:5432
     environment:
