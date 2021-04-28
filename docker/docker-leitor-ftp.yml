@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  leituraarquivo:
+  leitor-ftp:
     image: "leitor-ftp:$(CODE_SC_HG)"
     container_name: leitor-ftp
     ports:
