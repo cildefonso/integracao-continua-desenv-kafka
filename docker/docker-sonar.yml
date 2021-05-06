@@ -1,23 +1,24 @@
-version: "2"
+version: "3"
 
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - 443:443
-    volumes:
-      - ./opt/nginx/yourhost.xyz.key:/etc/nginx/yourhost.xyz.key:ro
-      - ./opt/nginx/yourhost.xyz.crt:/etc/nginx/yourhost.xyz.crt:ro
-      - ./opt/nginx/sonarqube.conf:/etc/nginx/conf.d/sonarqube.conf:z
-    networks:
-      - sonarnet
-    restart: always
+  #nginx:
+  #  image: nginx:latest
+  #  container_name: nginx
+  #  ports:
+  #    - 443:443
+  #  volumes:
+  #    - ./opt/nginx/yourhost.xyz.key:/etc/nginx/yourhost.xyz.key:ro
+  #    - ./opt/nginx/yourhost.xyz.crt:/etc/nginx/yourhost.xyz.crt:ro
+  #    - ./opt/nginx/sonarqube.conf:/etc/nginx/conf.d/sonarqube.conf:z
+  #  networks:
+  #    - sonarnet
+  #  restart: always
 
   sonarqube:
-    image: sonarqube:8.2-community
+    image: sonarqube:7.9-community
+    command: -Dsonar.ce.javaOpts=-Xmx819m -Dsonar.web.javaOpts=-Xmx819m
+    restart: unless-stopped
     #image: sonarqube:6.3.1
-    image: sonarqube:latest
     container_name: sonarqube
     depends_on:
       - db
@@ -60,3 +61,5 @@ volumes:
   sonarqube_temp:
   postgresql:
   postgresql_data:
+
+
