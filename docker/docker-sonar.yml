@@ -16,6 +16,7 @@ services:
 
   sonarqube:
     image: sonarqube:7.9-community
+    
     command: -Dsonar.ce.javaOpts=-Xmx819m -Dsonar.web.javaOpts=-Xmx819m
     restart: unless-stopped
     #image: sonarqube:6.3.1
