@@ -9,7 +9,7 @@ services:
     #  - portainer-net
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ildefonso/data/portainer/:/data
+      - /home/ildefonso/data/portainer:/data
     deploy:
       mode: replicated
       replicas: 1
