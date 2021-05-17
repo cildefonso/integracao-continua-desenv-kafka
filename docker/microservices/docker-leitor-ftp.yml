@@ -8,10 +8,10 @@ services:
       - "8081:8080"
       
     environment:
-      - spring.datasource.url=jdbc:postgresql://172.18.0.2/gnus
-      - s3.host= http://172.18.0.4:9444/s3
-      - ftp.server=172.18.0.3
-      - kafka.bootstrap-servers= 172.18.0.6:9092
+      - spring_datasource_url=jdbc:postgresql://172.18.0.1/gnus
+      - s3_host=http://172.18.0.1:9444/s3
+      - ftp_server=172.18.0.1
+      - kafka_bootstrap-servers=172.18.0.1:9092
     deploy:
       replicas: 1
       restart_policy:
