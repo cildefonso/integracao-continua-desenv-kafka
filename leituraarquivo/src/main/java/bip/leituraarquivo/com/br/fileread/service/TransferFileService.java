@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import bip.leituraarquivo.com.br.fileread.dto.FileTransfer;
+import bip.leituraarquivo.com.br.fileread.gateway.json.FileUUIDJson;
 import bip.leituraarquivo.com.br.fileread.message.Message;
 import bip.leituraarquivo.com.br.fileread.model.FileSave;
 import bip.leituraarquivo.com.br.fileread.service.createfile.CreateFileSaveService;
@@ -40,10 +41,11 @@ public class TransferFileService {
 	@Autowired
 	SendFileKafkaService sendFileKafkaService;
 	
-	@Scheduled(fixedRate = 100*600)
+	@Scheduled(fixedRate = 100*60)
 	public void execute() throws FileNotFoundException {
 
-	   log.info(Message.FTP_ACTIVE);	
+
+		log.info(Message.FTP_ACTIVE);	
 	   List<FileTransfer> ftpFiles = transferFTPService.execute();
 	   for (FileTransfer fileTransfer : ftpFiles) {
 			if (saveData.toLowerCase().equals("active")) {
@@ -51,12 +53,17 @@ public class TransferFileService {
 						.builder()
 						.timestamp(fileTransfer.getTimestamp())
 						.namefile(fileTransfer.getNamefile())
+						.newnamefile(fileTransfer.getNewnamefile())
 						.path(fileTransfer.getPath())
 						.build()
 						);
 				fileTransfer.setUuid(uuid);
 			}
-			sendFileKafkaService.execute(fileTransfer);
+			sendFileKafkaService.execute(fileTransfer, FileUUIDJson
+														.builder()
+														.uuid(fileTransfer.getUuid())
+														.name("Parametro do registro")
+														.build());
 		}
 	    log.info(Message.FOLDER_ACTIVE);
 	    List<FileTransfer> systemFiles = transferFileSystem.execute();
@@ -66,12 +73,17 @@ public class TransferFileService {
 						.builder()
 						.timestamp(fileTransfer.getTimestamp())
 						.namefile(fileTransfer.getNamefile())
+						.newnamefile(fileTransfer.getNewnamefile())
 						.path(fileTransfer.getPath())
 						.build()
 						);
 				fileTransfer.setUuid(uuid);
 			}
-			sendFileKafkaService.execute(fileTransfer);
+			sendFileKafkaService.execute(fileTransfer, FileUUIDJson
+					.builder()
+					.uuid(fileTransfer.getUuid())
+					.name("Parametro do registro")
+					.build());
 		}
 	}
 	

@@ -31,8 +31,8 @@ public class UploadS3Service {
     @Value("${s3.bucket}")
     private String s3Bucket;
     
-    @Value("${source.folder}")
-    private String sourceFolder;
+    @Value("${target.folder}")
+    private String targetFolder;
 
     public FileTransfer execute(String nameFile, File file) throws IOException {
     	String timeStamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
@@ -51,11 +51,12 @@ public class UploadS3Service {
 
         newClient.putObject(s3Bucket, newNameFile, file);
 
-       return FileTransfer
+        return FileTransfer
                .builder()
-               .path(sourceFolder)
+               .path(targetFolder)
                .timestamp(newNameFile.replace("-"+nameFile, ""))
                .namefile(nameFile)
+               .newnamefile(newNameFile)
                .build();
     }
 

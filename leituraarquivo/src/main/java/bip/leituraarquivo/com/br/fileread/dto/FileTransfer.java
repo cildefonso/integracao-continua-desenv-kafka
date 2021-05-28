@@ -13,6 +13,7 @@ public class FileTransfer {
 		private String uuid;
 		private String timestamp;
 		private String namefile;
+		private String newnamefile;
 		private String path;
 		private File pathLocal;
 		

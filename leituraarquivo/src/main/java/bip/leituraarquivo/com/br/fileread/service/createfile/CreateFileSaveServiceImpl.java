@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import bip.leituraarquivo.com.br.fileread.enums.FileStatusEnum;
 import bip.leituraarquivo.com.br.fileread.gateway.repository.FileSaveRepository;
 import bip.leituraarquivo.com.br.fileread.model.FileSave;
+import bip.leituraarquivo.com.br.fileread.service.filesystem.TransferFileSystem;
+import lombok.extern.log4j.Log4j2;
 
 @Service
+@Log4j2
 public class CreateFileSaveServiceImpl implements CreateFileSaveService {
 	
 	@Autowired
@@ -16,10 +19,16 @@ public class CreateFileSaveServiceImpl implements CreateFileSaveService {
 	
 	@Transactional
 	public String execute(FileSave fileSave) {
-		fileSave.setStatus(FileStatusEnum.RECEBIDO.toString());
-		fileSaveRepository.save(fileSave);
-		
-		return fileSave.getId().toString();
+		try {
+			fileSave.setStatus(FileStatusEnum.RECEBIDO.toString());
+			fileSaveRepository.save(fileSave);
+			
+			return fileSave.getId().toString();
+		}
+		catch (Exception ex) {
+			log.error(ex);
+		}
+		return null;
 	}
 
 }

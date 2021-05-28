@@ -39,6 +39,9 @@ public class TransferFTPService {
 	@Value("${ftp.s3.bucket}")
 	private String ftpS3Bucket;
 	
+	@Value("${target.folder}")
+	private String targetFolder;
+	
 	@Autowired
 	public UploadS3Service uploadS3Service;
 	
@@ -49,6 +52,11 @@ public class TransferFTPService {
 		//Criar cliente FTP
 		FTPClient ftpClient = new FTPClient();
 		try {
+            File fileTarget = new File(targetFolder);
+            if (!fileTarget.exists()) {
+            	fileTarget.mkdirs();
+            }
+            
             // configuração do ftp client
             ftpClient.addProtocolCommandListener(new PrintCommandListener(
             		new PrintWriter(System.out)));
@@ -65,7 +73,6 @@ public class TransferFTPService {
 	            for (String itemFile : files) {
 	            	String remoteFile1 = itemFile;
 	                File tmpDownload = new File(itemFile);
-	
 	                // baixa o arquivo
 	                OutputStream outputStream1 =  new BufferedOutputStream(new FileOutputStream(tmpDownload));
 	                boolean success = ftpClient.retrieveFile(remoteFile1, outputStream1);
@@ -81,6 +88,8 @@ public class TransferFTPService {
 	                    ftpClient.deleteFile(itemFile);
 	                    log.info(Message.DELETED_SERVER_FILE);
 	                }
+	                
+
 	            }
 		    } else log.info(Message.EXIST_FILE);
 	    } catch (Exception ex) {
@@ -98,4 +107,5 @@ public class TransferFTPService {
 	    }
 		return returnList;
 	}
+	
 }

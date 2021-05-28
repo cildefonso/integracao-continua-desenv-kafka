@@ -31,7 +31,7 @@ public class KafkaRequestSender {
 	
 	@Transactional
 	public void sendMessage(String topicRequest, Integer partition, Object request) {
-		final String mensageKey = UUID.randomUUID().toString();
+//		final String mensageKey = UUID.randomUUID().toString();
 //		Message<String> message = SendMessage
 //								.builder()
 //								.topic(topicRequest)
@@ -40,13 +40,13 @@ public class KafkaRequestSender {
 //								.timestamp(Long.parseLong(date))
 //								.data(new Gson().toJson(request))
 //								.build();
-//		Message<String> message = MessageBuilder
-//				.withPayload(new Gson().toJson(request))
-//				.setHeader(KafkaHeaders.TOPIC, topicRequest)
-//				.build();
-//		 log.info(message);
-		 this.KafkaTemplate.send(topicRequest, mensageKey, new Gson().toJson(request));
-		 //this.KafkaTemplate.send(message);
+		Message<String> message = MessageBuilder
+				.withPayload(new Gson().toJson(request))
+				.setHeader(KafkaHeaders.TOPIC, topicRequest)
+				.build();
+		 log.info(message);
+		// this.KafkaTemplate.send(topicRequest, mensageKey, new Gson().toJson(request));
+		 this.KafkaTemplate.send(message);
 	}
 
 }

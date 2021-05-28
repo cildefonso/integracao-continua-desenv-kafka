@@ -1,0 +1,24 @@
+kafka:
+  bootstrap-servers: 192.168.0.155:9092
+  consumergroup: leitor-files-group
+  topictopics3: topic-transformar-arquivo-s1
+  topictopics4: topic-transformar-arquivo-s2
+  partition0: 0
+  partition1: 1
+  partition2: 2
+  producer:
+    max:
+      request:
+        size: 231072000
+    batch-size: 60000000
+    buffer-memory: 60000000
+  client-id: leitor-files-producer
+  consumer:
+    #É o identificador do grupo de consumo do tópico, responsável 
+    #pelas configurações de consumo em paralelo do tópico, mais 
+    #sobre grupo de consumos pode ser visto na documentação.
+    group-id: leitor-files-group
+    #É a configuração da posição inicial que será consumida do tópico, 
+    #no caso foi configurado como “earliest”, então será do início do tópico.
+    auto-offset-reset: earliest
+    enable-auto-commit: false

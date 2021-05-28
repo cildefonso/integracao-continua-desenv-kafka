@@ -13,7 +13,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-//@Table(name = "files")
 @Table(name = "information_files")
 @Data
 @AllArgsConstructor
@@ -26,6 +25,7 @@ public class FileSave {
     private UUID id;
     private String timestamp;
     private String namefile;
+    private String newnamefile;
     private String path;
     private String status;
 
