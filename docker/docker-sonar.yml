@@ -15,10 +15,10 @@ services:
   #  restart: always
 
   sonarqube:
-    #image: sonarqube:7.9-community
+    image: sonarqube:7.9-community
     #command: -Dsonar.ce.javaOpts=-Xmx819m -Dsonar.web.javaOpts=-Xmx819m
     #restart: unless-stopped
-    image: sonarqube:8.2-community
+    #image: sonarqube:8.2-community
     container_name: sonarqube
     depends_on:
       - db
@@ -34,7 +34,7 @@ services:
       - ./sonar/sonarqube_data:/opt/sonarqube/data
       - ./sonar/sonarqube_extensions:/opt/sonarqube/extensions
       - ./sonar/sonarqube_logs:/opt/sonarqube/logs
-      #- ./sonar/sonarqube_temp:/opt/sonarqube/temp
+      - ./sonar/sonarqube_temp:/opt/sonarqube/temp
   db:
     image: postgres
     container_name: postgressonar
