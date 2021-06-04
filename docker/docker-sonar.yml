@@ -34,7 +34,7 @@ services:
       - ./sonar/sonarqube_data:/opt/sonarqube/data
       - ./sonar/sonarqube_extensions:/opt/sonarqube/extensions
       - ./sonar/sonarqube_logs:/opt/sonarqube/logs
-      - ./sonar/sonarqube_temp:/opt/sonarqube/temp
+      #- ./sonar/sonarqube_temp:/opt/sonarqube/temp
   db:
     image: postgres
     container_name: postgressonar
