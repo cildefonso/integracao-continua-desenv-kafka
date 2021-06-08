@@ -10,12 +10,19 @@
 	</parent>
 	<groupId>bip.leituraarquivo.com.br</groupId>
 	<artifactId>leituraarquivo</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<!--version>0.0.1-SNAPSHOT</version-->
 	<name>leituraarquivo</name>
 	<description>Leitura de arquivos</description>
 	<properties>
 		<java.version>11</java.version>
 		<org.jacoco.version>0.8.5</org.jacoco.version>
+   		<!-- nome do projeto -->
+   		<sonar.projectkey>leituraarquivo</sonar.projectkey>
+   		<!-- O endereço que leva à sua instalação do Sonar -->
+   		<sonar.host.url>http://localhost:9000</sonar.host.url>
+   		<!-- O login do seu usuário -->
+   		<sonar.login>e45c4f04a694fda86c3217e7e455bd4409756d03</sonar.login>
+
 	</properties>
 	<dependencies>
 	    <dependency>
@@ -88,8 +95,7 @@
 			<plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
-				<!-- version>3.6.1.1688</version-->
-				<version>3.7.0.1746</version>
+				<version>3.9.0.2155</version>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
