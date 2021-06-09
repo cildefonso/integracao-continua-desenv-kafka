@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM adoptopenjdk/openjdk11:latest
 VOLUME /tmp
-ADD /target/leituraarquivo-0.0.1-SNAPSHOT.jar app.jar
+ADD /target/leituraarquivo.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
